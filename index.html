@@ -35,19 +35,20 @@
     body {
       font-family: "STKaiti", "KaiTi", "Kaiti SC", "楷体", serif;
       scroll-behavior: smooth;
+      background-color: #0f172a; /* 深色底色有助于白色蜘蛛网显现 */
     }
     .glass-card {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    /* 标签悬停抖动 */
     .tag-item:hover {
       animation: shake 0.5s infinite;
       border-color: #60a5fa;
       color: #60a5fa;
     }
-    /* 调亮后的星云 */
+    /* 背景星云 */
     #cosmic-bg .cosmic-blob {
       border-radius: 50%;
       filter: blur(80px);
@@ -60,20 +61,20 @@
     }
   </style>
 </head>
-<body class="relative min-h-screen overflow-x-hidden bg-[#1e293b] text-white antialiased">
+<body class="relative min-h-screen overflow-x-hidden text-white antialiased">
 
   <!-- 背景层 (z-0) -->
   <div id="cosmic-bg" class="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_50%_45%,#334155_0%,#1e293b_60%,#0f172a_100%)]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_50%_45%,#1e293b_0%,#0f172a_60%,#020617_100%)]"></div>
     <div class="cosmic-blob absolute -left-[5%] top-[10%] h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(99,102,241,0.6)_0%,transparent_70%)]" style="animation: nebula-float 30s ease-in-out infinite"></div>
     <div class="cosmic-blob absolute right-[0%] bottom-[10%] h-[600px] w-[600px] bg-[radial-gradient(circle,rgba(45,212,191,0.5)_0%,transparent_70%)]" style="animation: nebula-float 40s ease-in-out infinite; animation-delay: -5s"></div>
   </div>
 
   <div class="relative z-10">
-    <!-- 导航 -->
-    <header class="fixed inset-x-0 top-0 z-50 bg-[#1e293b]/60 backdrop-blur-lg border-b border-white/10">
+    <!-- 导航栏 -->
+    <header class="fixed inset-x-0 top-0 z-50 bg-[#0f172a]/60 backdrop-blur-lg border-b border-white/10">
       <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#" class="text-2xl font-bold tracking-widest">PHY</a>
+        <a href="#" class="text-2xl font-bold tracking-widest text-white">PHY</a>
         <div class="hidden md:flex gap-8 text-lg font-medium text-white/70">
           <a href="#intro" class="hover:text-white transition">主页</a>
           <a href="#timeline" class="hover:text-white transition">成长足迹</a>
@@ -83,7 +84,7 @@
     </header>
 
     <main>
-      <!-- 第一屏：核心介绍区 -->
+      <!-- 第一屏：主内容 -->
       <section id="intro" class="min-h-screen flex items-center px-6 pt-20">
         <div class="mx-auto max-w-6xl w-full">
           <div class="flex flex-col md:flex-row items-center gap-16 mb-16">
@@ -93,7 +94,7 @@
                 <img src="https://phy-0223.github.io/phy-site/me.png" alt="Miku" class="h-full w-full object-cover scale-[1.7]">
               </div>
             </div>
-            <!-- 文字介绍 -->
+            <!-- 标题文字 -->
             <div class="flex-1 text-center md:text-left space-y-6">
               <h1 class="text-7xl md:text-8xl font-black anim-hidden animate-fade-in-up [animation-delay:200ms]">
                 你好，我是 <span class="text-blue-400">phy</span>
@@ -111,7 +112,7 @@
             </div>
           </div>
 
-          <!-- 个人状态展示 -->
+          <!-- 状态卡片 -->
           <div class="max-w-3xl anim-hidden animate-fade-in-up [animation-delay:800ms]">
             <div class="glass-card p-10 rounded-[2.5rem]">
               <h3 class="text-xl font-bold mb-4 flex items-center gap-3 text-blue-400">
@@ -129,46 +130,40 @@
       <!-- 时间轴 -->
       <section id="timeline" class="py-32 px-6">
         <div class="mx-auto max-w-4xl">
-          <h2 class="reveal anim-hidden text-4xl font-bold mb-20 text-center">成长足迹 / Timeline</h2>
+          <h2 class="reveal anim-hidden text-4xl font-bold mb-20 text-center uppercase tracking-widest">成长足迹</h2>
           <div class="space-y-12 relative before:absolute before:left-4 md:before:left-1/2 before:h-full before:w-0.5 before:bg-white/10">
-            
             <div class="reveal anim-hidden relative pl-12 md:pl-0 md:flex justify-between items-center w-full">
               <div class="hidden md:block w-[45%]"></div>
               <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#1e293b] border-4 border-blue-400"></div>
               <div class="md:w-[45%] glass-card p-8 rounded-2xl">
                 <span class="text-blue-400 font-bold">2024.03</span>
                 <h4 class="text-2xl font-bold mt-2">个人门户 v1.0 上线</h4>
-                <p class="text-white/50 mt-2 text-lg">融合了楷体美学与蜘蛛网交互特效。去掉了复杂的音频干扰，回归极简。</p>
+                <p class="text-white/50 mt-2 text-lg">基于 Tailwind 构建，去掉了多余组件，回归纯粹视觉体验。</p>
               </div>
             </div>
-
             <div class="reveal anim-hidden relative pl-12 md:pl-0 md:flex justify-between items-center w-full md:flex-row-reverse">
               <div class="hidden md:block w-[45%]"></div>
               <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#1e293b] border-4 border-emerald-400"></div>
               <div class="md:w-[45%] glass-card p-8 rounded-2xl">
                 <span class="text-emerald-400 font-bold text-lg">2023.12</span>
-                <h4 class="text-2xl font-bold mt-2">探索交互逻辑</h4>
-                <p class="text-white/50 mt-2 text-lg">开始深入研究 Tailwind CSS 与 Web 动画，试图让网页变得更加灵动。</p>
+                <h4 class="text-2xl font-bold mt-2">UI 动效实验</h4>
+                <p class="text-white/50 mt-2 text-lg">开始深入研究 Web 交互，试图让网页变得更加灵动。</p>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      <!-- 社交矩阵与邮箱 -->
+      <!-- 社交矩阵 -->
       <footer id="contact" class="py-32 px-6 border-t border-white/5">
         <div class="mx-auto max-w-6xl text-center">
-          <h2 class="reveal anim-hidden text-3xl font-bold mb-16 text-white/50 uppercase tracking-widest">Connect with Me</h2>
-          <div class="reveal anim-hidden flex flex-wrap justify-center gap-12 mb-24">
-            <!-- Email -->
+          <div class="reveal anim-hidden flex flex-wrap justify-center gap-12 mb-20">
             <a href="mailto:phy0223@outlook.com" class="group flex flex-col items-center gap-4">
               <div class="w-20 h-20 rounded-3xl glass-card flex items-center justify-center group-hover:bg-blue-600 group-hover:scale-110 transition duration-500">
                 <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-              <span class="text-lg text-white/40 group-hover:text-white transition">phy0223@outlook.com</span>
+              <span class="text-lg text-white/40 group-hover:text-white transition italic">phy0223@outlook.com</span>
             </a>
-            <!-- GitHub -->
             <a href="https://github.com/phy-0223" target="_blank" class="group flex flex-col items-center gap-4">
               <div class="w-20 h-20 rounded-3xl glass-card flex items-center justify-center group-hover:bg-white group-hover:text-black group-hover:scale-110 transition duration-500">
-                <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135
+                <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1
