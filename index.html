@@ -31,170 +31,116 @@
       overflow: hidden;
     }
     .glass-nav {
-      background: rgba(25, 25, 35, 0.72);
+      background: rgba(30, 41, 59, 0.7);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
     .anim-hidden {
       opacity: 0;
     }
-    .input-frost {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
 
-    /* 调整后的背景层 */
+    /* 增强亮度的背景层 */
     #cosmic-bg .cosmic-blob {
       border-radius: 50%;
-      filter: blur(80px);
-      -webkit-filter: blur(80px);
+      filter: blur(70px);
+      -webkit-filter: blur(70px);
       will-change: transform, opacity;
       mix-blend-mode: screen;
     }
-    #cosmic-bg .cosmic-sheen {
-      mix-blend-mode: soft-light;
-      opacity: 0.45; /* 增加流光亮度 */
-      will-change: transform;
-    }
     @keyframes nebula-float-a {
-      0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.5; }
-      33% { transform: translate3d(12vw, 10vh, 0) scale(1.2); opacity: 0.7; }
-      66% { transform: translate3d(-6vw, 14vh, 0) scale(0.9); opacity: 0.45; }
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.6; }
+      50% { transform: translate3d(10vw, 5vh, 0) scale(1.1); opacity: 0.8; }
     }
     @keyframes nebula-float-b {
-      0%, 100% { transform: translate3d(0, 0, 0) scale(1.1); opacity: 0.5; }
-      40% { transform: translate3d(-14vw, -8vh, 0) scale(1); opacity: 0.65; }
-      75% { transform: translate3d(10vw, -18vh, 0) scale(1.2); opacity: 0.4; }
-    }
-    @keyframes sheen-drift {
-      0% { transform: rotate(0deg) scale(1.2); }
-      100% { transform: rotate(360deg) scale(1.25); }
-    }
-    
-    /* 蜘蛛网 Canvas 样式确保在背景之上，内容之下 */
-    canvas {
-      pointer-events: none; /* 让点击穿透 canvas 到下层 */
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.5; }
+      50% { transform: translate3d(-8vw, -10vh, 0) scale(1.2); opacity: 0.7; }
     }
   </style>
 </head>
-<body class="relative min-h-screen overflow-x-hidden bg-[#0f172a] text-white antialiased selection:bg-white/20 selection:text-white">
-  
-  <!-- 背景层（z-0） -->
-  <div id="cosmic-bg" class="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#0a0f1e]" aria-hidden="true">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_50%_45%,#1e293b_0%,#0f172a_45%,#0a0f1e_100%)] opacity-[0.95]"></div>
-    
-    <!-- 增强亮度的星云 -->
-    <div class="cosmic-blob absolute -left-[10%] top-[5%] h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(139,92,246,0.5)_0%,transparent_70%)]" style="animation: nebula-float-a 60s ease-in-out infinite"></div>
-    <div class="cosmic-blob absolute -right-[10%] bottom-[5%] h-[600px] w-[600px] bg-[radial-gradient(circle,rgba(59,130,246,0.4)_0%,transparent_70%)]" style="animation: nebula-float-b 70s ease-in-out infinite; animation-delay: -10s"></div>
-    <div class="cosmic-blob absolute left-[20%] top-[30%] h-[400px] w-[400px] bg-[radial-gradient(circle,rgba(20,184,166,0.3)_0%,transparent_70%)]" style="animation: nebula-float-a 80s ease-in-out infinite; animation-delay: -20s"></div>
+<!-- 调亮后的底色：Slate-900 变更为更浅的色调 -->
+<body class="relative min-h-screen overflow-x-hidden bg-[#1e293b] text-white antialiased selection:bg-blue-500/30">
 
-    <div class="cosmic-sheen absolute -left-1/2 -top-1/2 h-[200%] w-[200%] bg-[conic-gradient(from_210deg_at_50%_50%,transparent_0deg,rgba(255,255,255,0.08)_72deg,transparent_140deg,rgba(56,189,248,0.1)_220deg,transparent_360deg)]" style="animation: sheen-drift 120s linear infinite"></div>
+  <!-- 动态亮色背景 -->
+  <div id="cosmic-bg" class="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_50%_45%,#334155_0%,#1e293b_60%,#0f172a_100%)]"></div>
+    
+    <!-- 明亮的星云色块 -->
+    <div class="cosmic-blob absolute -left-[5%] top-[10%] h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(99,102,241,0.6)_0%,transparent_70%)]" style="animation: nebula-float-a 40s ease-in-out infinite"></div>
+    <div class="cosmic-blob absolute -right-[5%] bottom-[10%] h-[600px] w-[600px] bg-[radial-gradient(circle,rgba(45,212,191,0.5)_0%,transparent_70%)]" style="animation: nebula-float-b 50s ease-in-out infinite"></div>
+    <div class="cosmic-blob absolute left-[25%] top-[25%] h-[400px] w-[400px] bg-[radial-gradient(circle,rgba(192,132,252,0.5)_0%,transparent_70%)]" style="animation: nebula-float-a 60s ease-in-out infinite; animation-delay: -5s"></div>
   </div>
 
   <div class="relative z-10">
     <!-- 导航 -->
-    <header class="fixed inset-x-0 top-0 z-50 glass-nav border-b border-white/[0.08]">
-      <nav class="relative mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 md:px-8 md:py-4">
-        <a href="#" class="text-sm font-bold tracking-widest text-white">PHY PORTAL</a>
-
-        <button type="button" id="nav-toggle" class="md:hidden text-white/90">
-          <svg id="icon-menu" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-        </button>
-
-        <ul id="nav-menu" class="hidden md:flex gap-10">
-          <li><a href="#intro" class="text-sm font-medium text-white/70 hover:text-white transition">首页</a></li>
-          <li><a href="#tech" class="text-sm font-medium text-white/70 hover:text-white transition">技术栈</a></li>
-          <li><a href="#works" class="text-sm font-medium text-white/70 hover:text-white transition">作品</a></li>
-          <li><a href="#contact" class="text-sm font-medium text-white/70 hover:text-white transition">联系</a></li>
+    <header class="fixed inset-x-0 top-0 z-50 glass-nav border-b border-white/10">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <a href="#" class="text-lg font-black tracking-tighter text-white">PHY.SITE</a>
+        <ul class="hidden md:flex gap-8 text-sm font-bold text-white/70">
+          <li><a href="#intro" class="hover:text-white transition">HOME</a></li>
+          <li><a href="#tech" class="hover:text-white transition">TECH</a></li>
+          <li><a href="#works" class="hover:text-white transition">WORK</a></li>
         </ul>
       </nav>
     </header>
 
     <main>
-      <!-- 英雄区 -->
-      <section id="intro" class="min-h-screen flex items-center px-5 pt-20">
-        <div class="mx-auto max-w-6xl w-full flex flex-col md:flex-row items-center gap-12">
-          <div class="anim-hidden animate-fade-in-up">
-            <img src="https://phy-0223.github.io/phy-site/me.png" alt="头像" class="h-56 w-56 rounded-full border-4 border-white/10 shadow-2xl" />
+      <!-- 英雄区：重点修改了头像部分 -->
+      <section id="intro" class="min-h-screen flex items-center px-6 pt-20">
+        <div class="mx-auto max-w-6xl w-full flex flex-col md:flex-row items-center gap-16">
+          
+          <!-- 头像容器：放大 Miku -->
+          <div class="anim-hidden animate-fade-in-up relative">
+            <div class="h-64 w-64 md:h-80 md:w-80 overflow-hidden rounded-3xl border-4 border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.1)]">
+              <!-- scale-150 让图片内的内容放大，object-center 确保居中 -->
+              <img 
+                src="https://phy-0223.github.io/phy-site/me.png" 
+                alt="Miku" 
+                class="h-full w-full object-cover scale-[1.6] transition duration-700 hover:scale-[1.8]"
+              />
+            </div>
+            <!-- 装饰性光晕 -->
+            <div class="absolute -inset-4 bg-blue-500/20 blur-3xl rounded-full -z-10"></div>
           </div>
-          <div class="space-y-6 text-center md:text-left">
-            <h1 class="anim-hidden animate-fade-in-up text-5xl md:text-8xl font-black [animation-delay:200ms]">你好，我是 <span class="text-blue-400">phy</span></h1>
-            <p class="anim-hidden animate-fade-in-up text-lg text-white/60 max-w-xl [animation-delay:400ms]">
-              在代码中寻找美感，在设计中构建逻辑。这是一个被调亮后的新空间。
+
+          <div class="space-y-8 text-center md:text-left">
+            <h1 class="anim-hidden animate-fade-in-up text-6xl md:text-8xl font-black tracking-tighter [animation-delay:200ms]">
+              HELLO, <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">I'M PHY.</span>
+            </h1>
+            <p class="anim-hidden animate-fade-in-up text-xl text-white/70 max-w-lg leading-relaxed [animation-delay:400ms]">
+              背景已调亮，头像中的 Miku 已放大处理。这是一个更明亮、更专注本质的个人空间。
             </p>
           </div>
         </div>
       </section>
 
-      <!-- 技术栈 -->
-      <section id="tech" class="py-32 px-5 bg-white/[0.02]">
+      <!-- 简单占位部分：技术栈 -->
+      <section id="tech" class="py-32 px-6">
         <div class="mx-auto max-w-6xl">
-          <h2 class="reveal anim-hidden text-3xl font-bold mb-12">技术栈 / Stack</h2>
-          <div class="flex flex-wrap gap-4">
-            <!-- 标签 -->
-            <span class="px-6 py-2 rounded-full border border-white/20 bg-white/5 hover:bg-white hover:text-black transition cursor-default">Python</span>
-            <span class="px-6 py-2 rounded-full border border-white/20 bg-white/5 hover:bg-white hover:text-black transition cursor-default">TypeScript</span>
-            <span class="px-6 py-2 rounded-full border border-white/20 bg-white/5 hover:bg-white hover:text-black transition cursor-default">Tailwind CSS</span>
-            <span class="px-6 py-2 rounded-full border border-white/20 bg-white/5 hover:bg-white hover:text-black transition cursor-default">UI Design</span>
+          <div class="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent mb-20"></div>
+          <h2 class="reveal anim-hidden text-4xl font-black mb-12">技术与工具</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="reveal anim-hidden p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">Python</div>
+            <div class="reveal anim-hidden p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">Tailwind</div>
+            <div class="reveal anim-hidden p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">Design</div>
+            <div class="reveal anim-hidden p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition">Creative</div>
           </div>
         </div>
       </section>
-
-      <!-- 作品展示 -->
-      <section id="works" class="py-32 px-5">
-        <div class="mx-auto max-w-6xl">
-          <h2 class="reveal anim-hidden text-3xl font-bold mb-16">精选项目 / Projects</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="reveal anim-hidden p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-blue-400/50 transition group">
-              <div class="h-40 bg-white/10 rounded-xl mb-6 group-hover:scale-105 transition duration-500"></div>
-              <h3 class="text-xl font-bold mb-2">项目名称 A</h3>
-              <p class="text-white/50 text-sm">点击页面任何地方，观察蜘蛛网特效的跟随。背景现在更加明亮。</p>
-            </div>
-            <!-- 重复项目 -->
-            <div class="reveal anim-hidden p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-blue-400/50 transition group [animation-delay:100ms]">
-              <div class="h-40 bg-white/10 rounded-xl mb-6 group-hover:scale-105 transition duration-500"></div>
-              <h3 class="text-xl font-bold mb-2">项目名称 B</h3>
-              <p class="text-white/50 text-sm">原有的涟漪特效已被替换。现在的特效对 CPU 消耗更低，且更具科技感。</p>
-            </div>
-            <div class="reveal anim-hidden p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-blue-400/50 transition group [animation-delay:200ms]">
-              <div class="h-40 bg-white/10 rounded-xl mb-6 group-hover:scale-105 transition duration-500"></div>
-              <h3 class="text-xl font-bold mb-2">项目名称 C</h3>
-              <p class="text-white/50 text-sm">欢迎通过下方的表单与我联系。祝你有愉快的一天！</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 底部 -->
-      <footer id="contact" class="py-32 px-5 border-t border-white/10">
-        <div class="mx-auto max-w-6xl text-center">
-          <h2 class="text-4xl font-bold mb-8">保持联系</h2>
-          <p class="text-white/50 mb-12">© 2026 phy · Built with Love & Science</p>
-          <a href="mailto:hello@example.com" class="inline-block px-12 py-4 rounded-full bg-blue-500 hover:bg-blue-400 font-bold transition">发送邮件</a>
-        </div>
-      </footer>
     </main>
   </div>
 
-  <!-- 蜘蛛网特效脚本 -->
+  <!-- 蜘蛛网特效插件 (针对 GitHub 优化版) -->
   <script>
-    /* 蜘蛛网特效插件集成 - 属性配置说明：
-       color: 线条颜色 (255,255,255 为白色)
-       opacity: 透明度 (0.7)
-       count: 粒子数量 (120)
-       zIndex: 层级 (1)
-    */
     !function () {
         function n(n, e, t) { return n.getAttribute(e) || t }
         function e(n) { return document.getElementsByTagName(n) }
         function t() {
             return {
                 l: 1, 
-                z: 1, // z-index 改为 1，确保在背景(z-0)上，内容(z-10)下
-                o: 0.6, // 透明度
-                c: "255,255,255", // 颜色改为白色，适应明亮一点的背景
-                n: 120 // 粒子数量稍微增加
+                z: 2,           // 提高层级，确保在背景之上
+                o: 0.7,         // 增加透明度
+                c: "255,255,255", // 纯白色
+                n: 150          // 增加线条密度
             }
         }
         function o() {
@@ -211,7 +157,8 @@
             x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (n) {
                 window.setTimeout(n, 1e3 / 45)
             }, w = Math.random, y = {x: null, y: null, max: 2e4};
-        m.id = l, m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o + ";pointer-events:none;", e("body")[0].appendChild(m), o(), window.onresize = o, window.onmousemove = function (n) {
+        m.id = l, m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o + ";pointer-events:none;";
+        e("body")[0].appendChild(m), o(), window.onresize = o, window.onmousemove = function (n) {
             n = n || window.event, y.x = n.clientX, y.y = n.clientY
         }, window.onmouseout = function () {
             y.x = null, y.y = null
@@ -230,10 +177,10 @@
       var observer = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('animate-fade-in-slow');
-            entry.target.classList.remove('anim-hidden');
-            observer.unobserve(entry.target);
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-fade-in-slow');
+              entry.target.classList.remove('anim-hidden');
+            }
           });
         },
         { threshold: 0.1 }
