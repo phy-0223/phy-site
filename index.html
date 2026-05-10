@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>phy · 个人门户</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            'fade-in-up': 'fadeInUp 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'fade-in-slow': 'fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(40px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body.menu-open {
+      overflow: hidden;
+    }
+    .glass-nav {
+      background: rgba(18, 18, 18, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .anim-hidden {
+      opacity: 0;
+    }
+    .input-frost {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="relative min-h-screen overflow-x-hidden bg-[#121212] text-white antialiased selection:bg-white/20 selection:text-white">
+  <!-- 背景紫色光晕 -->
+  <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <div
+      class="absolute -left-[25%] -top-[20%] h-[min(90vw,560px)] w-[min(90vw,560px)] rounded-full bg-gradient-to-br from-violet-950/50 via-purple-950/35 to-transparent opacity-70 blur-[120px]"
+    ></div>
+    <div
+      class="absolute -bottom-[25%] -right-[20%] h-[min(95vw,600px)] w-[min(95vw,600px)] rounded-full bg-gradient-to-tl from-indigo-950/45 via-purple-950/30 to-transparent opacity-65 blur-[130px]"
+    ></div>
+  </div>
+
+  <div class="relative z-10">
+    <!-- 导航 -->
+    <header class="fixed inset-x-0 top-0 z-50 glass-nav border-b border-white/[0.08]">
+      <nav class="relative mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 md:px-8 md:py-4" aria-label="主导航">
+        <a href="#" class="text-sm font-medium tracking-wide text-white/90 transition hover:text-white">phy</a>
+
+        <button
+          type="button"
+          id="nav-toggle"
+          class="relative z-[60] flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/90 transition hover:bg-white/5 md:hidden"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+          aria-label="打开菜单"
+        >
+          <span class="sr-only">菜单</span>
+          <svg id="icon-menu" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="icon-close" class="hidden h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <ul
+          id="nav-menu"
+          class="absolute left-0 right-0 top-full z-50 hidden max-h-[calc(100vh-3.5rem)] flex-col gap-0 overflow-y-auto border-b border-white/[0.08] bg-[#121212]/95 px-5 py-6 shadow-2xl backdrop-blur-xl md:static md:ml-0 md:flex md:max-h-none md:flex-row md:items-center md:gap-10 md:border-0 md:bg-transparent md:p-0 md:shadow-none"
+        >
+          <li class="border-b border-white/[0.06] py-4 md:border-0 md:py-0">
+            <a href="#intro" class="nav-link block text-base font-medium text-white/80 transition hover:text-white md:text-sm">首页</a>
+          </li>
+          <li class="border-b border-white/[0.06] py-4 md:border-0 md:py-0">
+            <a href="#tech" class="nav-link block text-base font-medium text-white/80 transition hover:text-white md:text-sm">技术栈</a>
+          </li>
+          <li class="border-b border-white/[0.06] py-4 md:border-0 md:py-0">
+            <a href="#works" class="nav-link block text-base font-medium text-white/80 transition hover:text-white md:text-sm">作品</a>
+          </li>
+          <li class="py-4 md:py-0">
+            <a href="#contact" class="nav-link block text-base font-medium text-white/80 transition hover:text-white md:text-sm">联系</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- 自我介绍 -->
+      <section id="intro" class="min-h-[85vh] px-5 pb-28 pt-32 md:px-8 md:pb-32 md:pt-44">
+        <div
+          class="mx-auto flex max-w-6xl flex-col items-center gap-12 text-center md:flex-row md:items-center md:gap-20 md:text-left lg:gap-28"
+        >
+          <div class="anim-hidden shrink-0 animate-fade-in-up">
+            <img
+              src="me.png"
+              alt="phy 的头像"
+              width="320"
+              height="320"
+              class="mx-auto h-52 w-52 rounded-[2rem] object-cover shadow-2xl shadow-black/50 ring-1 ring-white/[0.08] md:mx-0 md:h-72 md:w-72 md:rounded-[2.25rem]"
+            />
+          </div>
+          <div class="mx-auto max-w-3xl space-y-7 md:mx-0">
+            <p
+              class="anim-hidden animate-fade-in-up text-sm font-medium uppercase tracking-[0.25em] text-white/45 [animation-delay:140ms]"
+            >
+              Welcome
+            </p>
+            <h1
+              class="anim-hidden animate-fade-in-up text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-7xl lg:text-8xl [animation-delay:260ms]"
+            >
+              你好，我是<span class="mt-2 block text-white">phy</span>
+            </h1>
+            <p
+              class="anim-hidden animate-fade-in-up mx-auto max-w-xl text-base leading-relaxed text-white/55 md:mx-0 md:text-xl [animation-delay:400ms]"
+            >
+              设计与代码之间的留白，和页面上的留白一样重要。这里是我的个人门户 —— 极简、从容、专注本质。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 技术栈 -->
+      <section id="tech" class="border-t border-white/[0.06] px-5 py-24 md:px-8 md:py-32">
+        <div class="mx-auto max-w-6xl">
+          <div class="mb-14 text-center md:mb-16 md:text-left">
+            <p class="reveal anim-hidden text-sm font-medium uppercase tracking-[0.25em] text-white/45">Stack</p>
+            <h2 class="reveal anim-hidden mt-3 text-3xl font-bold tracking-tight text-white md:text-4xl">技术栈</h2>
+            <p class="reveal anim-hidden mx-auto mt-4 max-w-lg text-white/50 md:mx-0">
+              常用工具与方向 —— 以胶囊标签快速浏览。
+            </p>
+          </div>
+          <div class="flex flex-wrap justify-center gap-3 md:justify-start">
+            <span
+              class="reveal anim-hidden inline-flex rounded-full border border-white/[0.12] bg-white/[0.02] px-5 py-2.5 text-sm font-medium text-white/85 transition duration-300 hover:border-white hover:bg-white hover:text-neutral-900"
+              >Python</span
+            >
+            <span
+              class="reveal anim-hidden inline-flex rounded-full border border-white/[0.12] bg-white/[0.02] px-5 py-2.5 text-sm font-medium text-white/85 transition duration-300 hover:border-white hover:bg-white hover:text-neutral-900 [animation-delay:60ms]"
+              >UI Design</span
+            >
+            <span
+              class="reveal anim-hidden inline-flex rounded-full border border-white/[0.12] bg-white/[0.02] px-5 py-2.5 text-sm font-medium text-white/85 transition duration-300 hover:border-white hover:bg-white hover:text-neutral-900 [animation-delay:120ms]"
+              >AI Prompt Engineering</span
+            >
+            <span
+              class="reveal anim-hidden inline-flex rounded-full border border-white/[0.12] bg-white/[0.02] px-5 py-2.5 text-sm font-medium text-white/85 transition duration-300 hover:border-white hover:bg-white hover:text-neutral-900 [animation-delay:180ms]"
+              >Tailwind CSS</span
+            >
+            <span
+              class="reveal anim-hidden inline-flex rounded-full border border-white/[0.12] bg-white/[0.02] px-5 py-2.5 text-sm font-medium text-white/85 transition duration-300 hover:border-white hover:bg-white hover:text-neutral-900 [animation-delay:240ms]"
+              >TypeScript</span
+            >
+            <span
+              class="reveal anim-hidden inline-flex rounded-full border border-white/[0.12] bg-white/[0.02] px-5 py-2.5 text-sm font-medium text-white/85 transition duration-300 hover:border-white hover:bg-white hover:text-neutral-900 [animation-delay:300ms]"
+              >Figma</span
+            >
+            <span
+              class="reveal anim-hidden inline-flex rounded-full border border-white/[0.12] bg-white/[0.02] px-5 py-2.5 text-sm font-medium text-white/85 transition duration-300 hover:border-white hover:bg-white hover:text-neutral-900 [animation-delay:360ms]"
+              >Git</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- 作品展示 -->
+      <section id="works" class="border-t border-white/[0.06] px-5 py-24 md:px-8 md:py-36">
+        <div class="mx-auto max-w-6xl">
+          <div class="mb-16 text-center md:mb-28 md:text-left">
+            <p class="reveal anim-hidden text-sm font-medium uppercase tracking-[0.25em] text-white/45">Selected work</p>
+            <h2 class="reveal anim-hidden mt-3 text-3xl font-bold tracking-tight text-white md:text-5xl">作品展示</h2>
+            <p class="reveal anim-hidden mx-auto mt-5 max-w-lg text-white/50 md:mx-0">
+              三个精选项目占位，悬停即可感受轻微的尺度变化。
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-10">
+            <article
+              class="reveal anim-hidden group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8 transition duration-500 ease-out hover:scale-[1.02] hover:border-white/[0.14] hover:bg-white/[0.05] sm:p-10 md:hover:scale-[1.03]"
+            >
+              <div
+                class="mb-8 aspect-[4/3] rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] ring-1 ring-inset ring-white/[0.06]"
+                aria-hidden="true"
+              ></div>
+              <h3 class="text-xl font-semibold tracking-tight text-white">项目一</h3>
+              <p class="mt-3 text-sm leading-relaxed text-white/50">品牌与产品叙事 · 占位文案</p>
+            </article>
+
+            <article
+              class="reveal anim-hidden group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8 transition duration-500 ease-out hover:scale-[1.02] hover:border-white/[0.14] hover:bg-white/[0.05] [animation-delay:80ms] sm:p-10 md:hover:scale-[1.03]"
+            >
+              <div
+                class="mb-8 aspect-[4/3] rounded-2xl bg-gradient-to-br from-white/[0.06] to-white/[0.02] ring-1 ring-inset ring-white/[0.06]"
+                aria-hidden="true"
+              ></div>
+              <h3 class="text-xl font-semibold tracking-tight text-white">项目二</h3>
+              <p class="mt-3 text-sm leading-relaxed text-white/50">交互与动效实验 · 占位文案</p>
+            </article>
+
+            <article
+              class="reveal anim-hidden group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8 transition duration-500 ease-out hover:scale-[1.02] hover:border-white/[0.14] hover:bg-white/[0.05] [animation-delay:160ms] sm:p-10 md:hover:scale-[1.03]"
+            >
+              <div
+                class="mb-8 aspect-[4/3] rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] ring-1 ring-inset ring-white/[0.06]"
+                aria-hidden="true"
+              ></div>
+              <h3 class="text-xl font-semibold tracking-tight text-white">项目三</h3>
+              <p class="mt-3 text-sm leading-relaxed text-white/50">开源与工具链 · 占位文案</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部联系 -->
+      <footer id="contact" class="border-t border-white/[0.06] px-5 py-20 md:px-8 md:py-32">
+        <div class="mx-auto max-w-6xl">
+          <div class="mb-14 text-center md:mb-16 md:text-left">
+            <p class="reveal anim-hidden text-sm font-medium uppercase tracking-[0.25em] text-white/45">Contact</p>
+            <h2 class="reveal anim-hidden mt-3 text-3xl font-bold tracking-tight text-white md:text-4xl">保持联系</h2>
+            <p class="reveal anim-hidden mx-auto mt-4 max-w-md text-white/50 md:mx-0">留言或通过这些渠道找到我。</p>
+
+            <div class="reveal anim-hidden mt-8 flex justify-center gap-5 md:justify-start">
+              <a
+                href="https://github.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.04] text-white/80 transition hover:border-white/30 hover:bg-white/10 hover:text-white"
+                aria-label="GitHub"
+              >
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill-rule="evenodd"
+                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </a>
+              <a
+                href="mailto:hello@example.com"
+                class="flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.04] text-white/80 transition hover:border-white/30 hover:bg-white/10 hover:text-white"
+                aria-label="发送邮件"
+              >
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="grid gap-14 lg:grid-cols-2 lg:gap-16 lg:items-start">
+            <form id="feedback-form" class="reveal anim-hidden space-y-5 text-left" novalidate>
+              <div>
+                <label for="name" class="mb-2 block text-sm font-medium text-white/70">姓名</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  autocomplete="name"
+                  placeholder="怎么称呼你"
+                  class="input-frost w-full rounded-xl border border-white/[0.1] px-4 py-3 text-[15px] text-white placeholder:text-white/35 focus:border-white/25 focus:outline-none focus:ring-2 focus:ring-white/10"
+                />
+              </div>
+              <div>
+                <label for="email" class="mb-2 block text-sm font-medium text-white/70">邮箱</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  autocomplete="email"
+                  placeholder="your@email.com"
+                  class="input-frost w-full rounded-xl border border-white/[0.1] px-4 py-3 text-[15px] text-white placeholder:text-white/35 focus:border-white/25 focus:outline-none focus:ring-2 focus:ring-white/10"
+                />
+              </div>
+              <div>
+                <label for="message" class="mb-2 block text-sm font-medium text-white/70">留言</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="想对我说的话…"
+                  class="input-frost w-full resize-y rounded-xl border border-white/[0.1] px-4 py-3 text-[15px] text-white placeholder:text-white/35 focus:border-white/25 focus:outline-none focus:ring-2 focus:ring-white/10"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full rounded-xl border border-white/20 bg-white px-5 py-3.5 text-sm font-semibold text-neutral-900 transition hover:bg-white/90 sm:w-auto sm:min-w-[140px]"
+              >
+                发送留言
+              </button>
+              <p id="form-toast" class="hidden text-sm text-emerald-400/90" role="status"></p>
+            </form>
+
+            <div class="reveal anim-hidden space-y-6 text-center lg:text-left">
+              <div class="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-8">
+                <p class="text-sm text-white/45">直接联系</p>
+                <a href="mailto:hello@example.com" class="mt-3 block text-lg text-white/85 transition hover:text-white">hello@example.com</a>
+                <p class="mt-4 text-lg text-white/60">微信：<span class="text-white/85">your_wechat_id</span></p>
+              </div>
+            </div>
+          </div>
+
+          <p class="reveal anim-hidden mt-20 text-center text-sm text-white/35 lg:text-left">© 2026 phy · 保留所有权利</p>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        document.querySelectorAll('.anim-hidden').forEach(function (el) {
+          el.classList.remove('anim-hidden');
+        });
+      }
+
+      if (!prefersReduced) {
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('animate-fade-in-slow');
+              entry.target.classList.remove('anim-hidden');
+              observer.unobserve(entry.target);
+            });
+          },
+          { root: null, rootMargin: '0px 0px -8% 0px', threshold: 0.06 }
+        );
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          observer.observe(el);
+        });
+      }
+
+      var toggle = document.getElementById('nav-toggle');
+      var menu = document.getElementById('nav-menu');
+      var iconMenu = document.getElementById('icon-menu');
+      var iconClose = document.getElementById('icon-close');
+
+      function setMenuOpen(open) {
+        if (!menu || !toggle) return;
+        document.body.classList.toggle('menu-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
+        if (open) {
+          menu.classList.remove('hidden');
+          menu.classList.add('flex');
+          if (iconMenu) iconMenu.classList.add('hidden');
+          if (iconClose) iconClose.classList.remove('hidden');
+        } else {
+          menu.classList.add('hidden');
+          menu.classList.remove('flex');
+          if (iconMenu) iconMenu.classList.remove('hidden');
+          if (iconClose) iconClose.classList.add('hidden');
+        }
+      }
+
+      if (toggle && menu) {
+        toggle.addEventListener('click', function () {
+          var open = menu.classList.contains('hidden');
+          setMenuOpen(open);
+        });
+
+        menu.querySelectorAll('.nav-link').forEach(function (link) {
+          link.addEventListener('click', function () {
+            if (window.matchMedia('(max-width: 767px)').matches) setMenuOpen(false);
+          });
+        });
+
+        window.addEventListener('resize', function () {
+          if (window.matchMedia('(min-width: 768px)').matches) setMenuOpen(false);
+        });
+      }
+
+      var form = document.getElementById('feedback-form');
+      var toast = document.getElementById('form-toast');
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (toast) {
+            toast.textContent = '感谢留言！此为前端演示，如需回复请直接发邮件或添加微信。';
+            toast.classList.remove('hidden');
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
