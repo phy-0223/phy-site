@@ -31,139 +31,200 @@
     };
   </script>
   <style>
-    /* 全局指定楷体 */
+    /* 全局楷体设置 */
     body {
       font-family: "STKaiti", "KaiTi", "Kaiti SC", "楷体", serif;
       scroll-behavior: smooth;
-      background-color: #0f172a; /* 深色底色有助于白色蜘蛛网显现 */
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .glass-nav {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
+    .anim-hidden { opacity: 0; }
+    
+    /* 标签悬停抖动 */
     .tag-item:hover {
       animation: shake 0.5s infinite;
-      border-color: #60a5fa;
       color: #60a5fa;
+      border-color: #60a5fa;
     }
-    /* 背景星云 */
+
+    /* 增强亮度的背景层 */
     #cosmic-bg .cosmic-blob {
       border-radius: 50%;
-      filter: blur(80px);
+      filter: blur(70px);
       will-change: transform, opacity;
       mix-blend-mode: screen;
     }
-    @keyframes nebula-float {
-      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-      50% { transform: translate(5vw, 5vh) scale(1.1); opacity: 0.8; }
+    @keyframes nebula-float-a {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.6; }
+      50% { transform: translate3d(10vw, 5vh, 0) scale(1.1); opacity: 0.8; }
     }
   </style>
 </head>
-<body class="relative min-h-screen overflow-x-hidden text-white antialiased">
+<body class="relative min-h-screen overflow-x-hidden bg-[#1e293b] text-white antialiased selection:bg-blue-500/30">
 
-  <!-- 背景层 (z-0) -->
+  <!-- 背景层 -->
   <div id="cosmic-bg" class="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_50%_45%,#1e293b_0%,#0f172a_60%,#020617_100%)]"></div>
-    <div class="cosmic-blob absolute -left-[5%] top-[10%] h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(99,102,241,0.6)_0%,transparent_70%)]" style="animation: nebula-float 30s ease-in-out infinite"></div>
-    <div class="cosmic-blob absolute right-[0%] bottom-[10%] h-[600px] w-[600px] bg-[radial-gradient(circle,rgba(45,212,191,0.5)_0%,transparent_70%)]" style="animation: nebula-float 40s ease-in-out infinite; animation-delay: -5s"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_50%_45%,#334155_0%,#1e293b_60%,#0f172a_100%)]"></div>
+    <div class="cosmic-blob absolute -left-[5%] top-[10%] h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(99,102,241,0.6)_0%,transparent_70%)]" style="animation: nebula-float-a 40s ease-in-out infinite"></div>
+    <div class="cosmic-blob absolute -right-[5%] bottom-[10%] h-[600px] w-[600px] bg-[radial-gradient(circle,rgba(45,212,191,0.5)_0%,transparent_70%)]" style="animation: nebula-float-a 50s ease-in-out infinite; animation-delay: -5s"></div>
   </div>
 
   <div class="relative z-10">
-    <!-- 导航栏 -->
-    <header class="fixed inset-x-0 top-0 z-50 bg-[#0f172a]/60 backdrop-blur-lg border-b border-white/10">
+    <!-- 导航 -->
+    <header class="fixed inset-x-0 top-0 z-50 glass-nav border-b border-white/10">
       <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#" class="text-2xl font-bold tracking-widest text-white">PHY</a>
-        <div class="hidden md:flex gap-8 text-lg font-medium text-white/70">
-          <a href="#intro" class="hover:text-white transition">主页</a>
-          <a href="#timeline" class="hover:text-white transition">成长足迹</a>
-          <a href="#contact" class="hover:text-white transition">联系</a>
-        </div>
+        <a href="#" class="text-2xl font-bold tracking-tighter">PHY</a>
+        <ul class="hidden md:flex gap-8 text-lg font-medium text-white/70">
+          <li><a href="#intro" class="hover:text-white transition">首页</a></li>
+          <li><a href="#timeline" class="hover:text-white transition">经历</a></li>
+          <li><a href="#contact" class="hover:text-white transition">联系</a></li>
+        </ul>
       </nav>
     </header>
 
     <main>
-      <!-- 第一屏：主内容 -->
-      <section id="intro" class="min-h-screen flex items-center px-6 pt-20">
+      <!-- 个人信息区 -->
+      <section id="intro" class="min-h-screen flex items-center px-6 pt-24 pb-12">
         <div class="mx-auto max-w-6xl w-full">
-          <div class="flex flex-col md:flex-row items-center gap-16 mb-16">
-            <!-- 头像放大 (1.7x) -->
+          <div class="flex flex-col md:flex-row items-center gap-12 mb-16">
+            <!-- 放大 Miku 头像 -->
             <div class="anim-hidden animate-fade-in-up">
-              <div class="h-64 w-64 md:h-80 md:w-80 overflow-hidden rounded-full border-4 border-blue-400/30 shadow-[0_0_50px_rgba(56,189,248,0.2)]">
+              <div class="h-64 w-64 md:h-80 md:w-80 overflow-hidden rounded-full border-4 border-white/20 shadow-2xl">
                 <img src="https://phy-0223.github.io/phy-site/me.png" alt="Miku" class="h-full w-full object-cover scale-[1.7]">
               </div>
             </div>
-            <!-- 标题文字 -->
-            <div class="flex-1 text-center md:text-left space-y-6">
-              <h1 class="text-7xl md:text-8xl font-black anim-hidden animate-fade-in-up [animation-delay:200ms]">
-                你好，我是 <span class="text-blue-400">phy</span>
-              </h1>
-              <p class="text-2xl text-white/70 anim-hidden animate-fade-in-up [animation-delay:400ms]">
-                在 0 与 1 的逻辑丛林里，构建属于自己的数字留白。
+            <!-- 文字介绍 -->
+            <div class="space-y-6 text-center md:text-left flex-1">
+              <h1 class="anim-hidden animate-fade-in-up text-6xl md:text-8xl font-black [animation-delay:200ms]">你好，我是 <span class="text-blue-400">phy</span></h1>
+              <p class="anim-hidden animate-fade-in-up text-2xl text-white/70 [animation-delay:400ms]">
+                在代码与音乐的节奏中，寻找属于自己的留白。
               </p>
               <!-- 抖动标签 -->
-              <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-4 anim-hidden animate-fade-in-up [animation-delay:600ms]">
-                <span class="tag-item px-6 py-2 rounded-full border border-white/20 bg-white/5 transition cursor-default">Python</span>
-                <span class="tag-item px-6 py-2 rounded-full border border-white/20 bg-white/5 transition cursor-default">TypeScript</span>
-                <span class="tag-item px-6 py-2 rounded-full border border-white/20 bg-white/5 transition cursor-default">UI设计</span>
-                <span class="tag-item px-6 py-2 rounded-full border border-white/20 bg-white/5 transition cursor-default">初音未来</span>
+              <div class="anim-hidden animate-fade-in-up flex flex-wrap justify-center md:justify-start gap-4 pt-4 [animation-delay:600ms]">
+                <span class="tag-item px-5 py-2 rounded-full border border-white/20 bg-white/5 cursor-default transition">Python</span>
+                <span class="tag-item px-5 py-2 rounded-full border border-white/20 bg-white/5 cursor-default transition">TypeScript</span>
+                <span class="tag-item px-5 py-2 rounded-full border border-white/20 bg-white/5 cursor-default transition">UI设计</span>
+                <span class="tag-item px-5 py-2 rounded-full border border-white/20 bg-white/5 cursor-default transition">初音未来</span>
               </div>
             </div>
           </div>
 
-          <!-- 状态卡片 -->
-          <div class="max-w-3xl anim-hidden animate-fade-in-up [animation-delay:800ms]">
-            <div class="glass-card p-10 rounded-[2.5rem]">
-              <h3 class="text-xl font-bold mb-4 flex items-center gap-3 text-blue-400">
-                <span class="w-3 h-3 bg-blue-400 rounded-full animate-ping"></span>
-                当前状态 / Status
+          <!-- 第二行：状态卡片与网易云播放器 -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- 个人状态卡片 -->
+            <div class="anim-hidden animate-fade-in-up p-8 rounded-3xl bg-white/5 border border-white/10 [animation-delay:800ms]">
+              <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                当前状态
               </h3>
-              <p class="text-2xl leading-relaxed italic text-white/80">
-                “代码是理性的骨架，而艺术是感性的灵魂。目前我正致力于平衡两者，在喧嚣的互联网中开辟这片宁静的空间。”
+              <p class="text-lg text-white/80 leading-relaxed italic">
+                “正在研究代码与艺术的平衡点，偶尔在初音未来的歌声中寻找灵感。目前专注于打造这个极简风格的数字空间。”
               </p>
             </div>
+            <!-- 网易云播放器 -->
+            <div class="anim-hidden animate-fade-in-up [animation-delay:1000ms]">
+              <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100%" height="110" src="//music.163.com/outchain/player?type=2&id=1367451996&auto=0&height=90"></iframe>
+              <p class="text-xs text-white/40 mt-2 text-right">正在播放: My jealousy (Original ver.)</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- 时间轴 -->
-      <section id="timeline" class="py-32 px-6">
+      <!-- 时间轴框架 -->
+      <section id="timeline" class="py-32 px-6 bg-black/10">
         <div class="mx-auto max-w-4xl">
-          <h2 class="reveal anim-hidden text-4xl font-bold mb-20 text-center uppercase tracking-widest">成长足迹</h2>
+          <h2 class="reveal anim-hidden text-4xl font-bold mb-16 text-center">成长足迹 / Timeline</h2>
           <div class="space-y-12 relative before:absolute before:left-4 md:before:left-1/2 before:h-full before:w-0.5 before:bg-white/10">
+            
+            <!-- 节点 1 -->
             <div class="reveal anim-hidden relative pl-12 md:pl-0 md:flex justify-between items-center w-full">
               <div class="hidden md:block w-[45%]"></div>
-              <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#1e293b] border-4 border-blue-400"></div>
-              <div class="md:w-[45%] glass-card p-8 rounded-2xl">
+              <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#1e293b] border-4 border-blue-400 z-10"></div>
+              <div class="md:w-[45%] p-6 rounded-2xl bg-white/5 border border-white/10">
                 <span class="text-blue-400 font-bold">2024.03</span>
-                <h4 class="text-2xl font-bold mt-2">个人门户 v1.0 上线</h4>
-                <p class="text-white/50 mt-2 text-lg">基于 Tailwind 构建，去掉了多余组件，回归纯粹视觉体验。</p>
+                <h4 class="text-xl font-bold mt-1">上线个人门户 v1.0</h4>
+                <p class="text-white/50 mt-2">正式发布基于 Tailwind CSS 的星空个人空间，集成了音乐与蜘蛛网特效。</p>
               </div>
             </div>
+
+            <!-- 节点 2 -->
             <div class="reveal anim-hidden relative pl-12 md:pl-0 md:flex justify-between items-center w-full md:flex-row-reverse">
               <div class="hidden md:block w-[45%]"></div>
-              <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#1e293b] border-4 border-emerald-400"></div>
-              <div class="md:w-[45%] glass-card p-8 rounded-2xl">
-                <span class="text-emerald-400 font-bold text-lg">2023.12</span>
-                <h4 class="text-2xl font-bold mt-2">UI 动效实验</h4>
-                <p class="text-white/50 mt-2 text-lg">开始深入研究 Web 交互，试图让网页变得更加灵动。</p>
+              <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#1e293b] border-4 border-emerald-400 z-10"></div>
+              <div class="md:w-[45%] p-6 rounded-2xl bg-white/5 border border-white/10">
+                <span class="text-emerald-400 font-bold">2023.12</span>
+                <h4 class="text-xl font-bold mt-1">深挖 UI 与 交互动效</h4>
+                <p class="text-white/50 mt-2">开始尝试将极简主义设计应用于网页，学习 CSS 贝塞尔曲线动画。</p>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      <!-- 社交矩阵 -->
-      <footer id="contact" class="py-32 px-6 border-t border-white/5">
+      <!-- 社交媒体矩阵 -->
+      <section id="contact" class="py-32 px-6">
         <div class="mx-auto max-w-6xl text-center">
-          <div class="reveal anim-hidden flex flex-wrap justify-center gap-12 mb-20">
-            <a href="mailto:phy0223@outlook.com" class="group flex flex-col items-center gap-4">
-              <div class="w-20 h-20 rounded-3xl glass-card flex items-center justify-center group-hover:bg-blue-600 group-hover:scale-110 transition duration-500">
-                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h2 class="reveal anim-hidden text-3xl font-bold mb-12">在这里找到我</h2>
+          <div class="reveal anim-hidden flex flex-wrap justify-center gap-8">
+            <!-- 邮箱 -->
+            <a href="mailto:phy0223@outlook.com" class="group flex flex-col items-center gap-3">
+              <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-blue-500/20 group-hover:border-blue-500/50 transition duration-500">
+                <svg class="w-8 h-8 text-white/70 group-hover:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-              <span class="text-lg text-white/40 group-hover:text-white transition italic">phy0223@outlook.com</span>
+              <span class="text-sm text-white/50 group-hover:text-white">Email</span>
             </a>
-            <a href="https://github.com/phy-0223" target="_blank" class="group flex flex-col items-center gap-4">
-              <div class="w-20 h-20 rounded-3xl glass-card flex items-center justify-center group-hover:bg-white group-hover:text-black group-hover:scale-110 transition duration-500">
-                <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1
+            <!-- GitHub -->
+            <a href="https://github.com/phy-0223" target="_blank" class="group flex flex-col items-center gap-3">
+              <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-purple-500/20 group-hover:border-purple-500/50 transition duration-500">
+                <svg class="w-8 h-8 text-white/70 group-hover:text-purple-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              </div>
+              <span class="text-sm text-white/50 group-hover:text-white">GitHub</span>
+            </a>
+          </div>
+          <p class="mt-20 text-white/30 text-sm italic">“生命在不经意间流逝，唯有热爱永存。”</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 蜘蛛网特效脚本 -->
+  <script>
+    !function () {
+        function n(n, e, t) { return n.getAttribute(e) || t }
+        function e(n) { return document.getElementsByTagName(n) }
+        function t() { return { l: 1, z: 2, o: 0.6, c: "255,255,255", n: 120 } }
+        function o() { a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight }
+        function i() {
+            r.clearRect(0, 0, a, c);
+            var n, e, t, o, m, l;
+            s.forEach(function (i, x) {
+                for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e], null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+            }), x(i)
+        }
+        var a, c, u, m = document.createElement("canvas"), d = t(), l = "c_n" + d.l, r = m.getContext("2d"),
+            x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (n) { window.setTimeout(n, 1e3 / 45) }, w = Math.random, y = {x: null, y: null, max: 2e4};
+        m.id = l, m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o + ";pointer-events:none;";
+        e("body")[0].appendChild(m), o(), window.onresize = o, window.onmousemove = function (n) { n = n || window.event, y.x = n.clientX, y.y = n.clientY }, window.onmouseout = function () { y.x = null, y.y = null };
+        for (var s = [], f = 0; d.n > f; f++) { var h = w() * a, g = w() * c, v = 2 * w() - 1, p = 2 * w() - 1; s.push({x: h, y: g, xa: v, ya: p, max: 6e3}) }
+        u = s.concat([y]), setTimeout(function () { i() }, 100)
+    }();
+
+    // 滚动渐显
+    (function () {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-slow');
+            entry.target.classList.remove('anim-hidden');
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+</body>
+</html>
