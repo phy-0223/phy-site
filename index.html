@@ -43,18 +43,173 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
+
+    /* 五彩缤纷的黑色 · 星云背景层（z-0） */
+    #cosmic-bg .cosmic-blob {
+      border-radius: 50%;
+      filter: blur(90px);
+      -webkit-filter: blur(90px);
+      will-change: transform, opacity;
+      mix-blend-mode: screen;
+    }
+    #cosmic-bg .cosmic-sheen {
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      will-change: transform;
+    }
+    @keyframes nebula-float-a {
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 0.42;
+      }
+      33% {
+        transform: translate3d(12vw, 10vh, 0) scale(1.12);
+        opacity: 0.58;
+      }
+      66% {
+        transform: translate3d(-6vw, 14vh, 0) scale(0.92);
+        opacity: 0.38;
+      }
+    }
+    @keyframes nebula-float-b {
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) scale(1.05);
+        opacity: 0.4;
+      }
+      40% {
+        transform: translate3d(-14vw, -8vh, 0) scale(1);
+        opacity: 0.52;
+      }
+      75% {
+        transform: translate3d(10vw, -18vh, 0) scale(1.15);
+        opacity: 0.34;
+      }
+    }
+    @keyframes nebula-float-c {
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 0.36;
+      }
+      50% {
+        transform: translate3d(8vw, -12vh, 0) scale(1.18);
+        opacity: 0.55;
+      }
+    }
+    @keyframes nebula-float-d {
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+        opacity: 0.33;
+      }
+      50% {
+        transform: translate3d(-10vw, 16vh, 0) rotate(12deg) scale(1.08);
+        opacity: 0.48;
+      }
+    }
+    @keyframes sheen-drift {
+      0% {
+        transform: rotate(0deg) scale(1.2);
+      }
+      100% {
+        transform: rotate(360deg) scale(1.25);
+      }
+    }
+    @keyframes veil-pulse {
+      0%,
+      100% {
+        opacity: 0.22;
+      }
+      50% {
+        opacity: 0.38;
+      }
+    }
+
+    /* 点击水波纹 */
+    .ripple-ring {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 48px;
+      height: 48px;
+      margin-left: -24px;
+      margin-top: -24px;
+      border-radius: 50%;
+      pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      box-shadow:
+        0 0 24px rgba(167, 139, 250, 0.22),
+        inset 0 0 20px rgba(255, 255, 255, 0.06);
+      animation: ripple-out 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes ripple-out {
+      0% {
+        transform: scale(0.25);
+        opacity: 0.65;
+      }
+      100% {
+        transform: scale(42);
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #cosmic-bg .cosmic-blob,
+      #cosmic-bg .cosmic-sheen {
+        animation: none !important;
+      }
+      #cosmic-bg [style*='animation'] {
+        animation: none !important;
+      }
+    }
   </style>
 </head>
-<body class="relative min-h-screen overflow-x-hidden bg-[#121212] text-white antialiased selection:bg-white/20 selection:text-white">
-  <!-- 背景紫色光晕 -->
-  <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+<body class="relative min-h-screen overflow-x-hidden bg-[#050508] text-white antialiased selection:bg-white/20 selection:text-white">
+  <!-- 深空星云背景（最底层） -->
+  <div id="cosmic-bg" class="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#030305]" aria-hidden="true">
     <div
-      class="absolute -left-[25%] -top-[20%] h-[min(90vw,560px)] w-[min(90vw,560px)] rounded-full bg-gradient-to-br from-violet-950/50 via-purple-950/35 to-transparent opacity-70 blur-[120px]"
+      class="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_50%_45%,#121212_0%,#0a0a0c_42%,#030305_100%)] opacity-[0.97]"
     ></div>
     <div
-      class="absolute -bottom-[25%] -right-[20%] h-[min(95vw,600px)] w-[min(95vw,600px)] rounded-full bg-gradient-to-tl from-indigo-950/45 via-purple-950/30 to-transparent opacity-65 blur-[130px]"
+      class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_100%,rgba(15,15,25,0.9)_0%,transparent_55%)]"
+    ></div>
+
+    <!-- 深紫 -->
+    <div
+      class="cosmic-blob absolute -left-[18%] top-[8%] h-[min(85vw,560px)] w-[min(85vw,560px)] bg-[radial-gradient(circle,rgba(109,40,217,0.55)_0%,rgba(55,20,120,0.25)_38%,transparent_68%)]"
+      style="animation: nebula-float-a 78s ease-in-out infinite"
+    ></div>
+    <!-- 暗蓝 -->
+    <div
+      class="cosmic-blob absolute -right-[12%] bottom-[5%] h-[min(92vw,620px)] w-[min(92vw,620px)] bg-[radial-gradient(circle,rgba(37,99,235,0.45)_0%,rgba(15,40,90,0.28)_40%,transparent_70%)]"
+      style="animation: nebula-float-b 92s ease-in-out infinite; animation-delay: -12s"
+    ></div>
+    <!-- 极光绿 / 青 -->
+    <div
+      class="cosmic-blob absolute left-[28%] top-[42%] h-[min(65vw,420px)] w-[min(65vw,420px)] bg-[radial-gradient(circle,rgba(16,185,129,0.38)_0%,rgba(6,78,59,0.22)_42%,transparent_72%)]"
+      style="animation: nebula-float-c 68s ease-in-out infinite; animation-delay: -24s"
+    ></div>
+    <!-- 紫红点缀 -->
+    <div
+      class="cosmic-blob absolute right-[22%] top-[12%] h-[min(55vw,380px)] w-[min(55vw,380px)] bg-[radial-gradient(circle,rgba(168,85,247,0.42)_0%,rgba(88,28,135,0.2)_45%,transparent_72%)]"
+      style="animation: nebula-float-d 110s ease-in-out infinite; animation-delay: -40s"
+    ></div>
+
+    <!-- 微弱流光（锥形渐变缓慢旋转） -->
+    <div
+      class="cosmic-sheen absolute -left-1/2 -top-1/2 h-[200%] w-[200%] bg-[conic-gradient(from_210deg_at_50%_50%,transparent_0deg,rgba(139,92,246,0.14)_72deg,transparent_140deg,rgba(56,189,248,0.1)_220deg,transparent_280deg,rgba(52,211,153,0.09)_330deg,transparent_360deg)]"
+      style="animation: sheen-drift 140s linear infinite"
+    ></div>
+    <div
+      class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,transparent_62%)]"
+      style="animation: veil-pulse 14s ease-in-out infinite"
     ></div>
   </div>
+
+  <!-- 水波纹挂载层：仅视觉，不拦截点击 -->
+  <div id="ripple-root" class="pointer-events-none fixed inset-0 z-[1] overflow-hidden" aria-hidden="true"></div>
 
   <div class="relative z-10">
     <!-- 导航 -->
@@ -395,6 +550,31 @@
             toast.classList.remove('hidden');
           }
         });
+      }
+
+      var rippleRoot = document.getElementById('ripple-root');
+      if (rippleRoot && !prefersReduced) {
+        function spawnRipple(clientX, clientY) {
+          var ring = document.createElement('span');
+          ring.className = 'ripple-ring';
+          ring.style.left = clientX + 'px';
+          ring.style.top = clientY + 'px';
+          rippleRoot.appendChild(ring);
+          ring.addEventListener(
+            'animationend',
+            function () {
+              ring.remove();
+            },
+            { once: true }
+          );
+        }
+        document.addEventListener(
+          'pointerdown',
+          function (e) {
+            spawnRipple(e.clientX, e.clientY);
+          },
+          { passive: true }
+        );
       }
     })();
   </script>
